@@ -69,7 +69,7 @@ const unifiedServer = (req, res) => {
   req
     .on('data', function (data) {
       buffer += decoder.write(data);
-      log(`Buffer received: ${buffer}`);
+      logger.info(`Buffer received: ${buffer}`);
     })
     .on('end', () => {
       buffer += decoder.end();
@@ -82,7 +82,7 @@ const unifiedServer = (req, res) => {
         headers: headers,
       };
 
-      buffer ? (data.payload = buffer) : (data.payload = 'end');
+      buffer && (data.payload = buffer);
 
       const strPayload = JSON.stringify(data);
 

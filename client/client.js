@@ -111,17 +111,17 @@ const getOptions = {
     hostname: '127.0.0.1',
     port: 5000,
     path: '/',
-    method: 'GET',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Content-Length': Buffer.byteLength(body),
     },
   };
 
-/* Client.makeRequest(postOptions, body, data => {
-  console.log(data);
-}); */
-
-Client.makeRequest(getOptions, body, data => {
+Client.makeRequest(postOptions, body, data => {
   console.log(`\n\n\n\tReceived from server: ${data}`);
 });
+
+/* Client.makeRequest(getOptions, body, data => {
+  console.log(`\n\n\tReceived from server: ${data}`);
+}); */
