@@ -8,8 +8,4 @@ export const stringLength = arg => arg.length;
 
 export const contains = (arg, search) => arg.includes(search);
 
-export const isMethod = arg =>
-  typeof arg === 'method' &&
-  typeof arg === 'method' &&
-  undefined != arg &&
-  null != arg;
+export const isMethod = arg => typeof arg === 'function';

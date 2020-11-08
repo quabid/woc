@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import http from 'http';
+import bunyan from 'bunyan';
 import url from 'url';
 import colors from 'colors';
 import { customAlphabet } from 'nanoid';
@@ -8,6 +9,25 @@ import { log, cls } from '../custom_modules/Printer.js';
 
 dotenv.config();
 
+const logger = bunyan.createLogger({
+  name: 'JSON Server Module',
+  streams: [
+    {
+      level: 'info',
+      stream: process.stdout, // log INFO and above to stdout
+    },
+    {
+      level: 'error',
+      stream: process.stderr,
+      //   path: '/var/tmp/myapp-error.log', // log ERROR and above to a file
+    },
+    {
+      level: 'warn',
+      stream: process.stdout,
+      //   path: '/var/tmp/myapp-error.log', // log ERROR and above to a file
+    },
+  ],
+});
 const PORT = process.env.SERVER_PORT || 5000;
 const stringDecoder = str_dec.StringDecoder;
 const nanoid = customAlphabet('02468ouqtyminv*^#%`~[;>|\\', 13);
@@ -65,7 +85,10 @@ const unifiedServer = (req, res) => {
 
       const strPayload = JSON.stringify(data);
 
-      res.end(strPayload);
+      // res.write(strPayload);
+      res.end(strPayload, () => {
+        logger.info(`Server response ended`);
+      });
     });
 };
 

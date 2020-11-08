@@ -28,12 +28,13 @@ const decoder = new StringDecoder('utf-8');
 
 class client {
   constructor() {
-    logger.info(`Client class initialized`);
+    logger.info(`Client class instantiated`);
   }
 
-  makeRequest(options, data = null, cb = null) {
+  async makeRequest(options, body = null, cb = null) {
     logger.info(`Method makeRequest invoked`);
-    const optGood = options.hasOwnProperty('host') ? true : false;
+
+    const optGood = options.hasOwnProperty('hostname') ? true : false;
     let buffer = '';
 
     if (!optGood) {
@@ -41,22 +42,25 @@ class client {
       throw new Error('Options argument missing host property');
     }
 
-    const req = http.request(options, res => {
+    const req = await http.request(options, res => {
       logger.info(`Invoked request method on http object`);
 
       res
         .on('data', data => {
-          logger.info(`Receiving data from response object`);
           buffer += decoder.write(data);
+          logger.info(`Receiving data from response object: ${buffer}`);
         })
-        .on('end', data => {
-          logger.info('Request response ended');
+        .on('end', () => {
+          logger.info(`Request response ended`);
+
           if (isMethod(cb)) {
-            return cb({
-              status: res.statusMessage,
-              statusCode: res.statusCode,
-              payload: buffer,
-            });
+            cb(
+              stringify({
+                status: res.statusMessage,
+                statusCode: res.statusCode,
+                payload: buffer,
+              })
+            );
           }
         })
         .on('error', err => {
@@ -72,8 +76,14 @@ class client {
         });
     });
 
-    req.end(buffer, () => {
-      logger.info(`Request ended ${buffer}`);
+    if (null != body && options.method.toLowerCase() !== 'get') {
+      req.write(
+        typeof body !== 'string' && body.length ? stringify(body) : body
+      );
+    }
+
+    req.end(() => {
+      logger.info(`Request ended: ${buffer}`);
     });
   }
 
@@ -82,4 +92,36 @@ class client {
   }
 }
 
-export const Client = client;
+// export const Client = client;
+const Client = new client();
+
+const body = stringify({
+  'first name': 'rick',
+  'last name': 'walker',
+  email: 'rick@email.net',
+});
+
+const getOptions = {
+    hostname: '127.0.0.1',
+    port: 5000,
+    path: '/',
+    method: 'GET',
+  },
+  postOptions = {
+    hostname: '127.0.0.1',
+    port: 5000,
+    path: '/',
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(body),
+    },
+  };
+
+/* Client.makeRequest(postOptions, body, data => {
+  console.log(data);
+}); */
+
+Client.makeRequest(getOptions, body, data => {
+  console.log(`Received from server: ${data}`);
+});
