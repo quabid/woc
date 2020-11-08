@@ -1,0 +1,70 @@
+#chat-interface-div,
+#chat-form {
+  transform: translate3d(-170%, 0, 0);
+  transition: transform 220ms ease-in-out;
+
+  &.show {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+#chat-interface-div {
+  #chat-user-list {
+    .list-group-item {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+#user-signin-div,
+#user-registration-div,
+#forgot-password-div {
+  transform: translate3d(0, -400%, 0);
+  transition: transform 220ms ease-in-out;
+
+  &.show {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+#user-bar {
+  transform: translate3d(0, -100%, 0);
+  transition: transform 220ms ease-in-out;
+
+  &.show {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.registration-err-div .signin-err-div {
+  height: 0px;
+  opacity: 0;
+  transition: height 320ms opacity 320ms ease-in-out;
+
+  &.show {
+    height: 75px;
+    opacity: 1;
+  }
+}
+
+.v-scroll {
+  height: 90vh;
+  overflow: scroll;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  /* remove scrollbar space */
+  background: transparent;
+  /* optional: just make scrollbar invisible */
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none;
+}

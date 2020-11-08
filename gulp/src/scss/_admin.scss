@@ -1,0 +1,8 @@
+#admin-login-div {
+  transform: translate3d(-400%, 0, 0);
+  transition: transform 320ms ease-in-out;
+
+  &.show {
+    transform: translate3d(0, 0, 0);
+  }
+}

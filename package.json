@@ -1,0 +1,30 @@
+{
+  "name": "woc",
+  "version": "1.0.0",
+  "description": "NodeJS project for learning and working out some code",
+  "main": "index.js",
+  "dependencies": {
+    "async": "^3.2.0",
+    "bunyan": "^1.8.14",
+    "colors": "^1.4.0",
+    "concurrently": "^5.3.0",
+    "dotenv": "^8.2.0",
+    "express-async-handler": "^1.1.4",
+    "moment": "^2.29.1",
+    "nanoid": "^3.1.16"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quabid/woc.git"
+  },
+  "author": "Rick Walker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/quabid/woc/issues"
+  },
+  "homepage": "https://github.com/quabid/woc#readme"
+}
