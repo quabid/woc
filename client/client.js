@@ -123,5 +123,5 @@ const getOptions = {
 }); */
 
 Client.makeRequest(getOptions, body, data => {
-  console.log(`Received from server: ${data}`);
+  console.log(`\n\n\n\tReceived from server: ${data}`);
 });

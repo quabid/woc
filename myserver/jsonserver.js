@@ -80,8 +80,9 @@ const unifiedServer = (req, res) => {
         queryString: queryString,
         method: method,
         headers: headers,
-        payload: buffer,
       };
+
+      buffer ? (data.payload = buffer) : (data.payload = 'end');
 
       const strPayload = JSON.stringify(data);
 
