@@ -1,24 +1,35 @@
-import { Client } from './client/client.js';
+import { client } from './client/client.js';
 import { log } from './custom_modules/Printer.js';
+import { stringify } from './custom_modules/ObjectUtils.js';
 
 const myargs = process.argv;
 const parsedMyargs = myargs.splice(2);
-const options = {
-  port: 5000,
-  host: 'localhost',
-  url: 'http://localhost',
-  method: 'GET',
-  path: '/',
-};
 
-const client = new Client();
+const body = stringify({
+  'first name': 'rick',
+  'last name': 'walker',
+  email: 'rick@email.net',
+});
 
-try {
-  client.makeRequest(options, null, data => {
-    log(data);
-  });
-} catch (err) {
-  log(err);
-}
+const getOptions = {
+    hostname: 'www.yahoo.com',
+    port: 443,
+    path: '/index.html',
+    method: 'GET',
+  },
+  postOptions = {
+    hostname: 'yahoo.com',
+    port: 5000,
+    path: '/',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(body),
+    },
+  };
 
-process.exit(0);
+const Client = new client();
+
+Client.makeRequest(getOptions, body, data => {
+  log(data);
+});

@@ -1,4 +1,4 @@
-import http from 'http';
+import https from 'https';
 import bunyan from 'bunyan';
 import url from 'url';
 import { StringDecoder } from 'string_decoder';
@@ -26,7 +26,7 @@ const logger = bunyan.createLogger({
 });
 const decoder = new StringDecoder('utf-8');
 
-class client {
+class Client {
   constructor() {
     logger.info(`Client class instantiated`);
   }
@@ -42,7 +42,7 @@ class client {
       throw new Error('Options argument missing host property');
     }
 
-    const req = await http.request(options, res => {
+    const req = await https.request(options, res => {
       logger.info(`Invoked request method on http object`);
 
       res
@@ -51,7 +51,7 @@ class client {
           logger.info(`Receiving data from response object: ${buffer}`);
         })
         .on('end', () => {
-          logger.info(`Request response ended`);
+          logger.info(`Requester response ended`);
 
           if (isMethod(cb)) {
             cb(
@@ -92,10 +92,10 @@ class client {
   }
 }
 
-// export const Client = client;
-const Client = new client();
+export const client = Client;
+// const Client = new client();
 
-const body = stringify({
+/* const body = stringify({
   'first name': 'rick',
   'last name': 'walker',
   email: 'rick@email.net',
@@ -116,12 +116,14 @@ const getOptions = {
       'Content-Type': 'application/json',
       'Content-Length': Buffer.byteLength(body),
     },
-  };
+  }; */
 
+/*
 Client.makeRequest(postOptions, body, data => {
   console.log(`\n\n\n\tReceived from server: ${data}`);
-});
+}); //*/
 
-/* Client.makeRequest(getOptions, body, data => {
+/*
+ Client.makeRequest(getOptions, body, data => {
   console.log(`\n\n\tReceived from server: ${data}`);
-}); */
+}); //*/

@@ -6,19 +6,22 @@
   "type": "module",
   "dependencies": {
     "async": "^3.2.0",
+    "bcryptjs": "^2.4.3",
     "bunyan": "^1.8.14",
     "colors": "^1.4.0",
     "concurrently": "^5.3.0",
     "dotenv": "^8.2.0",
     "express-async-handler": "^1.1.4",
+    "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "nanoid": "^3.1.16"
   },
   "devDependencies": {},
   "scripts": {
-    "debug": "clear && node inspect client/client.js",
-    "start": "clear && node client/client.js",
-    "server": "nodemon myserver/jsonserver.js"
+    "debug": "node inspect client/client.js",
+    "client": "clear && node client/client.js",
+    "server": "nodemon myserver/jsonserver.js",
+    "start": "clear && node index.js"
   },
   "repository": {
     "type": "git",
