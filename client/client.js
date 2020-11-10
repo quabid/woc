@@ -42,11 +42,11 @@ class Client {
       throw new Error('Options argument missing host property');
     }
 
-    const req = await https.request(options, res => {
+    const req = await https.request(options, (res) => {
       logger.info(`Invoked request method on http object`);
 
       res
-        .on('data', data => {
+        .on('data', (data) => {
           buffer += decoder.write(data);
           logger.info(`Receiving data from response object: ${buffer}`);
         })
@@ -54,7 +54,8 @@ class Client {
           logger.info(`Requester response ended`);
 
           if (isMethod(cb)) {
-            cb(
+            logger.info(`Returning the callback with stringified json data`);
+            return cb(
               stringify({
                 status: res.statusMessage,
                 statusCode: res.statusCode,
@@ -63,7 +64,7 @@ class Client {
             );
           }
         })
-        .on('error', err => {
+        .on('error', (err) => {
           const errorMessage =
             // @ts-ignore
             err.response && err.response.data.message
@@ -77,9 +78,7 @@ class Client {
     });
 
     if (null != body && options.method.toLowerCase() !== 'get') {
-      req.write(
-        typeof body !== 'string' && body.length ? stringify(body) : body
-      );
+      req.write(typeof body !== 'string' && body ? stringify(body) : body);
     }
 
     req.end(() => {

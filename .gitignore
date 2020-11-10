@@ -23,6 +23,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+config/google_client_secret.json
 
 # frontend
 frontend/node_modules
