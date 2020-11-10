@@ -141,7 +141,20 @@ function createDeleteOptions(args) {
 
 function createGetOptions(args) {
   const strArgs = stringify(args);
+  const getOptions = {};
+  getOptions.hostname = args[0];
+  getOptions.port = args[1];
+  getOptions.path = args[2];
+  getOptions.method = args[3];
+
   logger.info(
     `Method createGetOptions invoked with these arguments: ${strArgs}`
   );
+
+  const Client = new client();
+
+  Client.makeRequest(getOptions, null, (data) => {
+    console.log(`\n`);
+    logger.info(`Received from server: ${data}`);
+  });
 }
