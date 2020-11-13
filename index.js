@@ -1,6 +1,5 @@
 import bunyan from 'bunyan';
 import { client } from './client/client.js';
-import { log } from './custom_modules/Printer.js';
 import { stringify } from './custom_modules/ObjectUtils.js';
 
 const logger = bunyan.createLogger({
@@ -152,9 +151,12 @@ function createGetOptions(args) {
   );
 
   const Client = new client();
-
-  Client.makeRequest(getOptions, null, (data) => {
-    console.log(`\n`);
-    logger.info(`Received from server: ${data}`);
-  });
+  try {
+    Client.makeRequest(getOptions, null, (data) => {
+      console.log(`\n`);
+      logger.info(`Received from server: ${data}`);
+    });
+  } catch (err) {
+    console.log(err.message + '\n' + err.cause);
+  }
 }

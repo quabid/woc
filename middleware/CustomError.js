@@ -1,37 +1,36 @@
-export class CustomError extends Error {
+class MyError extends Error {
   constructor(message) {
     super(message);
+    this.name = this.constructor.name;
+  }
+}
+
+class CustomError extends MyError {
+  constructor(message, cause = 'Internal error') {
+    super(message);
     this.name = 'CustomError';
+    this.cause = cause;
   }
 }
 
 export class PropertyRequiredError extends CustomError {
-  constructor(property) {
-    super(`No property: ${property}`);
-    this.name = 'PropertyRequiredError';
+  constructor(property, cause = 'Object is missing a requred property') {
+    super(`Missing property: ${property}`, cause);
+    this.name = 'PropertyMissingError';
     this.property = property;
   }
 }
 
-const user = { name: 'rick' };
-
-function test() {
-  throw new CustomError('test function throws an error');
-}
-
-function test2() {
-  if (!user.age) {
-    throw new PropertyRequiredError('age');
-  }
-  if (!user.email) {
-    throw new PropertyRequiredError('email');
+export class InvalidVariableError extends CustomError {
+  constructor(message, cause = `Variable is either null or undefined`) {
+    super(message, cause);
+    this.name = 'InvalidVariableError';
   }
 }
 
-try {
-  test2();
-} catch (err) {
-  console.log(err.message);
-  console.log(`Error name: ${err.name}`);
-  console.log(`Error Stack: ${err.stack}`);
+export class InvalidMethodError extends CustomError {
+  constructor(message, cause = 'Argument is not a function') {
+    super(message, cause);
+    this.name = 'InvalidMethodError';
+  }
 }

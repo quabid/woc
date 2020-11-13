@@ -2,8 +2,13 @@ import https from 'https';
 import bunyan from 'bunyan';
 import url from 'url';
 import { StringDecoder } from 'string_decoder';
+import {
+  PropertyRequiredError,
+  InvalidMethodError,
+} from '../middleware/CustomError.js';
 import { isMethod, isString } from '../custom_modules/Utils.js';
 import { stringify } from '../custom_modules/ObjectUtils.js';
+import { filterHeaders } from '../middleware/Filter.js';
 
 const logger = bunyan.createLogger({
   name: 'Client Class Module',
@@ -31,19 +36,31 @@ class Client {
     logger.info(`Client class instantiated`);
   }
 
-  async makeRequest(options, body = null, cb = null) {
+  makeRequest(options, body = null, cb = null) {
     logger.info(`Method makeRequest invoked`);
 
     const optGood = options.hasOwnProperty('hostname') ? true : false;
     let buffer = '';
 
     if (!optGood) {
-      logger.warn('Bad options argument');
-      throw new Error('Options argument missing host property');
+      throw new PropertyRequiredError(
+        'hostname',
+        'options object missing hostname property'
+      );
+      logger.warn('hostname property missing');
     }
 
-    const req = await https.request(options, (res) => {
-      logger.info(`Invoked request method on http object`);
+    const req = https.request(options, (res) => {
+      logger.info(
+        `Invoked request method on http object, now inside callback function`
+      );
+
+      filterHeaders(res).forEach((header) => {
+        for (let h in header) {
+          const objH = header[h];
+          console.log(`${h}: ${objH}`);
+        }
+      });
 
       res
         .on('data', (data) => {
@@ -62,6 +79,11 @@ class Client {
                 payload: buffer,
               })
             );
+          } else {
+            logger.error(`Invalid function received as callback`);
+            throw new InvalidMethodError(
+              `Expected a function as callback but received: ${cb}`
+            );
           }
         })
         .on('error', (err) => {
@@ -73,7 +95,13 @@ class Client {
               : err.message;
 
           logger.error(`Error: ${errorMessage} `);
-          return cb({ status: errorMessage });
+          if (isMethod(cb)) {
+            return cb({ status: errorMessage });
+          } else {
+            return new Promise((resolve, reject) => {
+              return reject(errorMessage);
+            });
+          }
         });
     });
 
