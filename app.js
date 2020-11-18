@@ -3,6 +3,7 @@ import {
   fileExists,
   fileWritable,
   readFile,
+  writeFile,
 } from './custom_modules/filesystem/index.js';
 import { log } from './custom_modules/Printer.js';
 
@@ -30,7 +31,7 @@ fileReadable('./myserver/cert.pem')
   .then((data) => log(data))
   .catch((err) => log(err)); */
 
-readFile('./myserver/cert.pem', true, (data) => {
+/* readFile('./myserver/cert.pem', true, (data) => {
   data.status === 'success'
     ? log(`Success\n\t${data.payload}`)
     : log(`Failed: ${data.cause}`);
@@ -56,4 +57,18 @@ readFile('./myserver/cert.pem', false)
       ? log(`Success: \n\t${data.payload}`)
       : log(`Failed: ${data.cause}`)
   )
-  .catch((err) => log(`Error: ${err.cause}`));
+  .catch((err) => log(`Error: ${err.cause}`)); */
+
+/* writeFile(
+  '/home/quobod/Documents/',
+  'test_file.html',
+  '<h1>totally disavow those dukes</h1>',
+  false,
+  (err) => {
+    log(err ? err.message : 'success');
+  }
+); */
+
+writeFile('./', 'test_file.txt', 'Dem dukes', false)
+  .then((res) => log(res.status))
+  .catch((err) => log(err.cause));
