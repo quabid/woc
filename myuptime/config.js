@@ -39,4 +39,4 @@ const environmentToExport =
     : environments.staging;
 
 // Export this module
-module.exports = environmentToExport;
+export default environmentToExport;

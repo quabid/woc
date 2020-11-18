@@ -3,13 +3,20 @@
  */
 
 // Denpendencies
-const http = require('http');
+/* const http = require('http');
 const https = require('https');
 const url = require('url');
 const fs = require('fs');
 const stringDecoder = require('string_decoder').StringDecoder;
-const config = require('./config');
+const config = require('./config'); */
+import http from 'http';
+import https from 'https';
+import url from 'url';
+import fs from 'fs';
+import string_decoder from 'string_decoder';
+import config from './config.js';
 
+const stringDecoder = string_decoder.StringDecoder;
 const stringify = (obj = {}) => JSON.stringify(obj);
 const table = console.table.bind(console);
 const cls = console.clear.bind(console);

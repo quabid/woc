@@ -55,12 +55,7 @@ class Client {
         `Invoked request method on http object, now inside callback function`
       );
 
-      filterHeaders(res).forEach((header) => {
-        for (let h in header) {
-          const objH = header[h];
-          console.log(`${h}: ${objH}`);
-        }
-      });
+      const strServerResponseHeaders = stringify(filterHeaders(res));
 
       res
         .on('data', (data) => {
@@ -72,17 +67,21 @@ class Client {
 
           if (isMethod(cb)) {
             logger.info(`Returning the callback with stringified json data`);
-            return cb(
-              stringify({
-                status: res.statusMessage,
-                statusCode: res.statusCode,
-                payload: buffer,
-              })
-            );
+            const callbackData = {
+              status: res.statusMessage,
+              statusCode: res.statusCode,
+              payload: buffer,
+            };
+
+            if (strServerResponseHeaders) {
+              callbackData.serverResponseHeaders = strServerResponseHeaders;
+            }
+
+            return cb(stringify(callbackData));
           } else {
             logger.error(`Invalid function received as callback`);
             throw new InvalidMethodError(
-              `Expected a function as callback but received: ${cb}`
+              `Expected a function as callback but received: ${typeof cb}`
             );
           }
         })

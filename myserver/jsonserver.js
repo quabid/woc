@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
-import http from 'http';
+import https from 'https';
+import fs from 'fs';
 import bunyan from 'bunyan';
 import url from 'url';
 import colors from 'colors';
@@ -28,9 +29,15 @@ const logger = bunyan.createLogger({
     },
   ],
 });
-const PORT = process.env.SERVER_PORT || 5000;
+const PORT = process.env.SERVER_PORT || 80;
 const stringDecoder = str_dec.StringDecoder;
-const nanoid = customAlphabet('02468ouqtyminv*^#%`~[;>|\\', 13);
+const nanoid = customAlphabet('02465ouqtyminv*^#%`~[;>|\\', 13);
+
+// Instantiating the HTTPS server
+const httpsServerOptions = {
+  key: fs.readFileSync('./key.pem'),
+  cert: fs.readFileSync('./cert.pem'),
+};
 
 // All server logic for both http and https
 const unifiedServer = (req, res) => {
@@ -95,7 +102,7 @@ const unifiedServer = (req, res) => {
 
 const status = (msg = '') => log.log(msg);
 
-const server = http.createServer((req, res) => {
+const server = https.createServer(httpsServerOptions, (req, res) => {
   unifiedServer(req, res);
 });
 
