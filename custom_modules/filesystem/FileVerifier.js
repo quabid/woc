@@ -19,7 +19,6 @@ export const fileExists = (path, asynchronous = false, cb = null) => {
           if (err) {
             return reject(false);
           }
-
           return resolve(true);
         });
       });
