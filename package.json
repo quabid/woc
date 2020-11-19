@@ -21,7 +21,8 @@
     "debug": "node inspect client/client.js",
     "client": "clear && node client/client.js",
     "server": "nodemon myserver/jsonserver.js",
-    "start": "clear && node index.js"
+    "start": "clear && node app.js",
+    "del": "node deleteFile.js"
   },
   "repository": {
     "type": "git",
