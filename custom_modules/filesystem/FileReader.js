@@ -4,6 +4,12 @@ import { cls, error, log } from '../Printer.js';
 import { generateToken, verifyToken } from '../JwtMaker.js';
 import { isMethod } from '../index.js';
 
+/** Read file contents. The callback returns object:status & payload upon success and
+ *  status & cause upon failure. Returns a Promise if callback is not passed.
+ * @param path: file path
+ * @param readSynchronously: boolean - true to use synchronous. defaults true
+ * @param cb: optional callback
+ */
 export const readFile = (path, readSynchronously = true, cb) => {
   if (isMethod(cb)) {
     // Read synchronously

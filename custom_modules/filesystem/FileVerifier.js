@@ -4,11 +4,11 @@ import { cls, error, log } from '../Printer.js';
 import { generateToken, verifyToken } from '../JwtMaker.js';
 import { isMethod } from '../index.js';
 
-/* export const fileExists = (path, asynchronous = false) =>
-  asynchronous
-    ? fs.access(path, fs.constants.F_OK, (err) => (err ? false : true))
-    : fs.existsSync(path); */
-
+/** Verify file exists. The callback contains only an error parameter.
+ * @param path: file path
+ * @param asynchronous: boolean - true to use asynchronous. defaults false
+ * @param cb: optional callback - will return a promise if no callback
+ */
 export const fileExists = (path, asynchronous = false, cb = null) => {
   if (asynchronous) {
     if (isMethod(cb)) {
