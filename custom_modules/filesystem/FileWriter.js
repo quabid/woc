@@ -21,6 +21,8 @@ export const writeFile = (
   if (isMethod(cb)) {
     if (!append) {
       fs.writeFile(`${destination}${filename}`, content, cb);
+    } else {
+      fs.appendFile(`${destination}${filename}`, content, cb);
     }
   } else {
     if (!append) {
@@ -30,16 +32,26 @@ export const writeFile = (
             if (err) {
               log(err);
               return reject({
-                status: 'failed',
+                status: false,
                 cause: err.cause || err.message,
               });
             }
-            return resolve({ status: 'success' });
+            return resolve({ status: true });
           });
         } catch (err) {
           log(err);
-          return reject({ status: 'failed', cause: err.cause || err.message });
+          return reject({ status: false, cause: err.cause || err.message });
         }
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        fs.appendFile(`${destination}${filename}`, content, (err) => {
+          if (err) {
+            log(`Error: ${err.message}`);
+            return reject({ status: false, cause: err.cause || err.message });
+          }
+          return resolve({ status: true });
+        });
       });
     }
   }

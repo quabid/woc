@@ -60,15 +60,27 @@ readFile('./myserver/cert.pem', false)
   .catch((err) => log(`Error: ${err.cause}`)); */
 
 /* writeFile(
-  '/home/quobod/Documents/',
+  './',
   'test_file.html',
-  '<h1>totally disavow those dukes</h1>',
-  false,
+  `<h1>totally disavow those dukes</h1>
+  <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum reprehenderit obcaecati ad possimus nihil explicabo nulla distinctio porro hic suscipit iste repellendus corrupti libero voluptate dolore, tenetur temporibus enim. Nostrum.</p>`,
+  true,
   (err) => {
-    log(err ? err.message : 'success');
+    log(err ? err.cause : 'success');
   }
 ); */
 
-writeFile('./', 'test_file.txt', 'Dem dukes', false)
+/* writeFile(
+  './',
+  'test_file.html',
+  `<h2>And Another thing ...</h2>
+  <p>The quickest of the brown foxes had indeed jumped over all of the lazy dogs.</p>`,
+  true,
+  (err) => {
+    log(err ? err.cause : 'success');
+  }
+); */
+
+/* writeFile('./', 'test_file.html', 'Dem dukes', false)
   .then((res) => log(res.status))
-  .catch((err) => log(err.cause));
+  .catch((err) => log(err.cause)); */
