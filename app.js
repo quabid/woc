@@ -4,8 +4,10 @@ import {
   fileWritable,
   readFile,
   writeFile,
+  retrieveFileStats,
 } from './custom_modules/filesystem/index.js';
-import { log } from './custom_modules/Printer.js';
+import { log } from './custom_modules/index.js';
+import { stringify } from './custom_modules/ObjectUtils.js';
 
 /* fileExists('./myserver/cerct.pem', false, null)
   .then((res) => log(res))
@@ -84,3 +86,7 @@ readFile('./myserver/cert.pem', false)
 /* writeFile('./', 'test_file.html', 'Dem dukes', false)
   .then((res) => log(res.status))
   .catch((err) => log(err.cause)); */
+
+retrieveFileStats('./myserver/cert.pem', true).then((res) =>
+  log(`${res.status ? stringify(res.payload) : res.cause}`)
+);
