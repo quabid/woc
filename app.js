@@ -87,6 +87,14 @@ readFile('./myserver/cert.pem', false)
   .then((res) => log(res.status))
   .catch((err) => log(err.cause)); */
 
-retrieveFileStats('./myserver/cert.pem', true).then((res) =>
+/* retrieveFileStats('./myserver/cert.pem', true).then((res) =>
   log(`${res.status ? stringify(res.payload) : res.cause}`)
-);
+).catch(err => log(`${err.message})); */
+
+retrieveFileStats('./myserver/cert.pem', true, (stats, err) => {
+  if (err) {
+    log(`Error: ${err.message}`);
+  } else {
+    log(`${stringify(stats)}`);
+  }
+});
