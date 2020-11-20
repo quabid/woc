@@ -19,7 +19,7 @@ import { stringify } from './custom_modules/ObjectUtils.js';
   .then((res) => log(res))
   .catch((err) => log(err)); */
 
-fileExists('./myserver/cerct.pem', true, (results) => log(results));
+fileExists('./myserver/cert.pem', true, (results) => log(results.status));
 
 /* fileExists('./myserver/cerct.pem', false, null)
   .then((res) => log(res))
