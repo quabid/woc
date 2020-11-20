@@ -9,6 +9,18 @@ import {
 import { log } from './custom_modules/index.js';
 import { stringify } from './custom_modules/ObjectUtils.js';
 
+/* fileExists('./myserver/cert.pem', false, null)
+  .then((res) => log(res))
+  .catch((err) => log(err)); */
+
+// fileExists('./myserver/cerct.pem', false, (results) => log(results));
+
+/* fileExists('./myserver/cert.pem', true, null)
+  .then((res) => log(res))
+  .catch((err) => log(err)); */
+
+fileExists('./myserver/cerct.pem', true, (results) => log(results));
+
 /* fileExists('./myserver/cerct.pem', false, null)
   .then((res) => log(res))
   .catch((err) => log(err));
@@ -91,10 +103,10 @@ readFile('./myserver/cert.pem', false)
   log(`${res.status ? stringify(res.payload) : res.cause}`)
 ).catch(err => log(`${err.message})); */
 
-retrieveFileStats('./myserver/cert.pem', true, (stats, err) => {
+/* retrieveFileStats('./myserver/cert.pem', true, (stats, err) => {
   if (err) {
     log(`Error: ${err.message}`);
   } else {
     log(`${stringify(stats)}`);
   }
-});
+}); */

@@ -14,14 +14,7 @@ export const fileExists = (path, asynchronous = false, cb = null) => {
     if (isMethod(cb)) {
       fs.access(path, fs.constants.F_OK, cb);
     } else {
-      return new Promise((resolve, reject) => {
-        return fs.access(path, fs.constants.F_OK, (err) => {
-          if (err) {
-            return reject(false);
-          }
-          return resolve(true);
-        });
-      });
+      return fs.promises.access(path, fs.constants.F_OK);
     }
   } else {
     if (isMethod(cb)) {

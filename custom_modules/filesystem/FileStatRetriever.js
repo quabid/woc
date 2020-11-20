@@ -18,6 +18,11 @@ export const retrieveFileStats = (path, asynchronous = true, cb) => {
             payload: Object.assign(
               {},
               {
+                isFIFO: stats.isFIFO(),
+                isCharacterDevice: stats.isCharacterDevice(),
+                isBlockDevice: stats.isBlockDevice(),
+                isSymbolicLink: stats.isSymbolicLink(),
+                isSocket: stats.isSymbolicLink(),
                 isFile: stats.isFile(),
                 isDirectory: stats.isDirectory(),
                 ...stats,
@@ -35,6 +40,11 @@ export const retrieveFileStats = (path, asynchronous = true, cb) => {
           payload: Object.assign(
             {},
             {
+              isFIFO: stats.isFIFO(),
+              isCharacterDevice: stats.isCharacterDevice(),
+              isBlockDevice: stats.isBlockDevice(),
+              isSymbolicLink: stats.isSymbolicLink(),
+              isSocket: stats.isSymbolicLink(),
               isFile: stats.isFile(),
               isDirectory: stats.isDirectory(),
               ...stats,
@@ -62,6 +72,11 @@ export const retrieveFileStats = (path, asynchronous = true, cb) => {
               payload: Object.assign(
                 {},
                 {
+                  isFIFO: stats.isFIFO(),
+                  isCharacterDevice: stats.isCharacterDevice(),
+                  isBlockDevice: stats.isBlockDevice(),
+                  isSymbolicLink: stats.isSymbolicLink(),
+                  isSocket: stats.isSymbolicLink(),
                   isFile: stats.isFile(),
                   isDirectory: stats.isDirectory(),
                   ...stats,
@@ -80,6 +95,11 @@ export const retrieveFileStats = (path, asynchronous = true, cb) => {
             payload: Object.assign(
               {},
               {
+                isFIFO: stats.isFIFO(),
+                isCharacterDevice: stats.isCharacterDevice(),
+                isBlockDevice: stats.isBlockDevice(),
+                isSymbolicLink: stats.isSymbolicLink(),
+                isSocket: stats.isSymbolicLink(),
                 isFile: stats.isFile(),
                 isDirectory: stats.isDirectory(),
                 ...stats,
