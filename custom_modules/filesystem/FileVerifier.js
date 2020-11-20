@@ -19,7 +19,12 @@ export const fileExists = (path, asynchronous = false, cb = null) => {
         return cb({ status: true });
       });
     } else {
-      return fs.promises.access(path, fs.constants.F_OK);
+      return new Promise((resolve, reject) => {
+        return fs.promises
+          .access(path, fs.constants.F_OK)
+          .then((results) => resolve(true))
+          .catch((err) => reject(false));
+      });
     }
   } else {
     if (isMethod(cb)) {
