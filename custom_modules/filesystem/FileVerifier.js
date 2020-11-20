@@ -12,7 +12,6 @@ import { isMethod } from '../index.js';
 export const fileExists = (path, asynchronous = false, cb = null) => {
   if (asynchronous) {
     if (isMethod(cb)) {
-      fs.access(path, fs.constants.F_OK, cb);
       fs.access(path, fs.constants.F_OK, (err) => {
         if (err) {
           return cb({ status: false, cause: err.cause || err.message || err });
