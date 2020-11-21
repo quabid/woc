@@ -12,8 +12,9 @@ import { isMethod } from '../index.js';
 export const fileExists = (path, asynchronous = false, cb = null) => {
   if (asynchronous) {
     if (isMethod(cb)) {
-      fs.access(path, fs.constants.F_OK, (err) => {
+      fs.access(path, fs.constants.F_OK, err => {
         if (err) {
+          // @ts-ignore
           return cb({ status: false, cause: err.cause || err.message || err });
         }
         return cb({ status: true });
@@ -22,8 +23,8 @@ export const fileExists = (path, asynchronous = false, cb = null) => {
       return new Promise((resolve, reject) => {
         return fs.promises
           .access(path, fs.constants.F_OK)
-          .then((results) => resolve(true))
-          .catch((err) => reject(false));
+          .then(results => resolve(true))
+          .catch(err => reject(false));
       });
     }
   } else {
