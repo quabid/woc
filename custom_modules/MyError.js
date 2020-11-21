@@ -34,3 +34,11 @@ export class InvalidMethodError extends CustomError {
     this.name = 'InvalidMethodError';
   }
 }
+
+export class FileExistError extends PropertyRequiredError {
+  constructor(filePath, cause = `File path doesn't exist`) {
+    super(`${filePath} does not exist`, cause);
+    this.name = 'FilePathDoesNotExistError';
+    this.property = filePath;
+  }
+}
