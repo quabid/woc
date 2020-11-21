@@ -1,17 +1,10 @@
-import {
-  fileReadable,
-  fileExists,
-  fileWritable,
-  readFile,
-  writeFile,
-  retrieveFileStats,
-} from './custom_modules/filesystem/index.js';
+import { FilesystemUtils } from './custom_modules/index.js';
 import { log } from './custom_modules/index.js';
 import { stringify } from './custom_modules/ObjectUtils.js';
 
-/* fileExists('./myserver/cert.pem', false, null)
-  .then((res) => log(res))
-  .catch((err) => log(err)); */
+/* FilesystemUtils.fileExists('./myserver/cert.pem', false, null)
+  .then(res => log(res))
+  .catch(err => log(err)); */
 
 // fileExists('./myserver/cerct.pem', false, (results) => log(results));
 
